@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+.venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database & Generated Storage
+data/*.db
+data/*.sqlite
+!data/.gitkeep
+storage/temp/*
+!storage/temp/.gitkeep
+storage/generated/*
+!storage/generated/.gitkeep
+storage/*.wav
+storage/*.npz
+storage/*.bin
+
+# Windows / macOS metadata
+*:Zone.Identifier
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Environment & IDE
+.env
+.idea/
+.vscode/
+*.swp
+*.swo

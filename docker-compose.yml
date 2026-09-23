@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tts-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=text-to-speech
+      - APP_ENV=production
+      - DATABASE_URL=sqlite:////app/data/tts.db
+      - STORAGE_PATH=/app/storage
+      - MODEL_PATH=/app/storage/models
+      - TTS_DEVICE=cpu
+    volumes:
+      - ./backend/app:/app/app
+      - ./data:/app/data
+      - ./storage:/app/storage
+      - ./storage/models:/app/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: tts-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
