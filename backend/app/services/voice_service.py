@@ -46,14 +46,14 @@ class VoiceService:
             )
 
         # 2. Section 29: Security checks (file extension, size)
-        allowed_extensions = {".wav", ".mp3", ".flac", ".m4a", ".ogg"}
+        allowed_extensions = {".wav", ".mp3", ".flac", ".m4a", ".ogg", ".oga", ".opus", ".webm", ".aac", ".wma"}
         for sf in sample_files:
             filename = sf.filename or "sample.wav"
             ext = os.path.splitext(filename)[1].lower()
             if ext not in allowed_extensions:
                 raise HTTPException(
                     status_code=400,
-                    detail=f"Định dạng file '{filename}' không hợp lệ. Các định dạng được hỗ trợ: {', '.join(allowed_extensions)}"
+                    detail=f"Định dạng file '{filename}' không hợp lệ. Các định dạng được hỗ trợ: {', '.join(sorted(allowed_extensions))}"
                 )
 
         # 3. Create Voice record

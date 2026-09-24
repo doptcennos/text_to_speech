@@ -1,0 +1,17 @@
+Đoạn văn test tổng hợp (Comprehensive TTS Test Case)
+"Xin chào! Hôm nay là thứ Năm, ngày 24/09/2026. 
+Hệ thống âm thanh tự động của chúng tôi xin gửi đến quý vị bản tin thử nghiệm chất lượng giọng đọc.
+
+Đầu tiên, về mặt kỹ thuật số và đo lường: Nhiệt độ phòng lab hiện tại đạt 25.5°C với độ ẩm xấp xỉ 68%. 
+Tốc độ xử lý của chip AI đạt mức 3.8 GHz, tăng hơn 15% so với phiên bản thử nghiệm năm 2024. 
+Đơn hàng mã số #VN-88492 có tổng giá trị là 1.250.000 VNĐ (tương đương khoảng $50 USD), được thanh 
+toán qua thẻ VISA/MasterCard lúc 09:30 AM.
+
+Tiếp theo là phần xử lý ngôn ngữ hỗn hợp và thuật ngữ chuyên ngành: Các kỹ sư phần mềm tại chi nhánh 
+FPT Software đang triển khai giao thức API RESTful dựa trên nền tảng Cloud của Microsoft và Google. 
+Liệu mô hình Machine Learning này có đủ thông minh để nhận biết các từ như 'feedback', 'livestream', 
+hay 'deadline' mà không bị ngọng?
+
+Cuối cùng, hãy lắng nghe ngữ điệu và ngắt câu: Ối chà! Thật bất ngờ phải không? Một khoảng dừng ngắn... 
+và rồi tiếp tục. Dù gặp câu hỏi: 'Bạn có nghe rõ tôi nói không?', hay một lời khẳng định dứt khoát: 
+'Chắc chắn là có!', hệ thống vẫn cần giữ được sự tự nhiên, mượt mà và truyền cảm."

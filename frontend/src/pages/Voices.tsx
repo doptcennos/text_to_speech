@@ -36,7 +36,7 @@ export const Voices: React.FC<VoicesProps> = ({
       return;
     }
     if (sampleFiles.length === 0) {
-      setError('Vui lòng chọn ít nhất một file mẫu âm thanh (.wav, .mp3, .m4a, .flac)');
+      setError('Vui lòng chọn ít nhất một file mẫu âm thanh (.wav, .mp3, .m4a, .flac, .ogg, .oga, .opus, .webm)');
       return;
     }
     setError(null);
@@ -305,7 +305,7 @@ export const Voices: React.FC<VoicesProps> = ({
 
               <div style={{ marginBottom: '24px' }}>
                 <label style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>
-                  Mẫu Ghi Âm (.wav, .mp3, .m4a, .flac) * (Cho phép chọn nhiều file)
+                  Mẫu Ghi Âm (.wav, .mp3, .m4a, .flac, .ogg, .oga, .opus, .webm) * (Cho phép chọn nhiều file)
                 </label>
                 <div style={{
                   border: '2px dashed var(--border-color)',
@@ -318,7 +318,7 @@ export const Voices: React.FC<VoicesProps> = ({
                   <input
                     type="file"
                     multiple
-                    accept=".wav,.mp3,.flac,.m4a,.ogg"
+                    accept=".wav,.mp3,.flac,.m4a,.ogg,.oga,.opus,.webm,.aac,.wma,audio/*"
                     id="sample-file-input"
                     style={{ display: 'none' }}
                     onChange={(e) => {

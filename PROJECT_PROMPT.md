@@ -204,10 +204,7 @@ Sau khi container backend đã khởi động (khoảng 15-30 giây):
 python3 init_samples.py
 ```
 Kết quả hiển thị `201 Created` cho cả 4 giọng:
-- `Thùy Tiên - Linh (Thực tập sinh)`
-- `Thùy Tiên - Hà (Thực tập sinh)`
-- `Thùy Tiên - Chị Mai (HR)`
-- `Thùy Tiên - Chị Lan (Kế toán)`
+
 
 ### Bước 4: Truy cập ứng dụng
 - **Giao diện phòng thu Web**: [http://localhost](http://localhost)
