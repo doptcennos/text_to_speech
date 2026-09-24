@@ -14,7 +14,7 @@ build/
 
 # Frontend
 frontend/node_modules/
-frontend/dist/
+# frontend/dist/
 frontend/.vite/
 npm-debug.log*
 yarn-debug.log*
