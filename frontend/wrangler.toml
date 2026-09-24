@@ -1,4 +1,4 @@
-name = "text-to-speech-frontend"
+name = "text-to-speech"
 compatibility_date = "2024-09-01"
 
 # Cấu hình Static Assets cho Cloudflare Workers (yêu cầu Wrangler v3.78+)
