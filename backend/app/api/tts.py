@@ -1,8 +1,10 @@
+import os
 import json
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
+from app.config import settings
 from app.database import get_db
 from app.models.tts_job import TTSJob
 from app.models.voice import Voice
@@ -51,7 +53,6 @@ async def generate_speech(req: TTSGenerateRequest, db: Session = Depends(get_db)
     if not req.text.strip():
         raise HTTPException(status_code=400, detail="Text cannot be empty")
 
-    # If not multi-speaker and voice_id provided, verify voice has embedding
     if not req.multi_speaker and req.voice_id:
         v = db.query(Voice).filter(Voice.id == req.voice_id).first()
         if not v:
@@ -62,9 +63,6 @@ async def generate_speech(req: TTSGenerateRequest, db: Session = Depends(get_db)
                 detail="Voice profile is not ready. Please rebuild the voice profile."
             )
 
-    is_multi = req.multi_speaker or bool(req.is_multi_speaker)
-    
-    # Extract speakers list flexibly
     speakers_list = req.speakers
     if not speakers_list and req.speaker_mapping:
         if isinstance(req.speaker_mapping, str):
@@ -104,7 +102,6 @@ async def generate_speech(req: TTSGenerateRequest, db: Session = Depends(get_db)
     db.commit()
     db.refresh(job)
 
-    # Enqueue to background worker
     worker = get_worker()
     await worker.enqueue_job(job.id)
 
@@ -134,3 +131,39 @@ def cancel_job(id: str, db: Session = Depends(get_db)):
     if not success:
         raise HTTPException(status_code=400, detail="Cannot cancel job in current state")
     return {"status": "ok", "message": "Job cancelled"}
+
+@router.delete("/jobs/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_job(id: str, db: Session = Depends(get_db)):
+    job = db.query(TTSJob).filter(TTSJob.id == id).first()
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    for ext in ("wav", "mp3"):
+        fpath = os.path.join(settings.STORAGE_PATH, "generated", f"{job.id}.{ext}")
+        if os.path.exists(fpath):
+            try:
+                os.remove(fpath)
+            except Exception:
+                pass
+
+    db.delete(job)
+    db.commit()
+    return None
+
+@router.delete("/history", status_code=status.HTTP_200_OK)
+def clear_history(db: Session = Depends(get_db)):
+    generated_dir = os.path.join(settings.STORAGE_PATH, "generated")
+    if os.path.exists(generated_dir):
+        for fname in os.listdir(generated_dir):
+            if fname.startswith("."):
+                continue
+            fpath = os.path.join(generated_dir, fname)
+            try:
+                if os.path.isfile(fpath):
+                    os.remove(fpath)
+            except Exception:
+                pass
+
+    count = db.query(TTSJob).delete()
+    db.commit()
+    return {"status": "ok", "deleted_jobs": count}

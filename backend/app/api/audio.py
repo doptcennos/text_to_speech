@@ -1,11 +1,12 @@
 import os
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.audio_file import AudioFile
+from app.models.tts_job import TTSJob
 from app.schemas.audio import AudioFileResponse
 from app.config import settings
 
@@ -37,7 +38,6 @@ def get_audio(id: str, db: Session = Depends(get_db)):
 
 @router.get("/{id}/stream")
 def stream_audio(id: str, db: Session = Depends(get_db)):
-    """Stream audio with support for Range requests."""
     audio = db.query(AudioFile).filter(AudioFile.id == id).first()
     if not audio or not os.path.exists(audio.file_path):
         raise HTTPException(status_code=404, detail="Audio file not found on disk")
@@ -55,7 +55,6 @@ def download_audio(
     format: Optional[str] = Query(None),
     db: Session = Depends(get_db)
 ):
-    """Download audio as WAV or MP3 attachment."""
     audio = db.query(AudioFile).filter(AudioFile.id == id).first()
     if not audio:
         raise HTTPException(status_code=404, detail="Audio not found")
@@ -63,7 +62,6 @@ def download_audio(
     target_format = (format or audio.format).lower()
     file_path = os.path.join(settings.STORAGE_PATH, "generated", f"{audio.job_id}.{target_format}")
 
-    # Fallback to stored file_path if requested format file does not exist
     if not os.path.exists(file_path):
         file_path = audio.file_path
 
@@ -86,7 +84,6 @@ def delete_audio(id: str, db: Session = Depends(get_db)):
     if not audio:
         raise HTTPException(status_code=404, detail="Audio not found")
 
-    # Remove generated files (.wav and .mp3)
     for ext in ("wav", "mp3"):
         fpath = os.path.join(settings.STORAGE_PATH, "generated", f"{audio.job_id}.{ext}")
         if os.path.exists(fpath):
@@ -95,6 +92,13 @@ def delete_audio(id: str, db: Session = Depends(get_db)):
             except Exception:
                 pass
 
+    job_id = audio.job_id
     db.delete(audio)
+    
+    if job_id:
+        job = db.query(TTSJob).filter(TTSJob.id == job_id).first()
+        if job:
+            db.delete(job)
+
     db.commit()
     return None

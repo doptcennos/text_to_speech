@@ -90,11 +90,11 @@ export const Studio: React.FC<StudioProps> = ({ voices, onOpenVoiceModal }) => {
   const [speed, setSpeed] = useState(1.0);
   const [pitch, setPitch] = useState(0.0);
   const [outputFormat, setOutputFormat] = useState<'mp3' | 'wav'>('mp3');
-  
+
   const [isMultiSpeaker, setIsMultiSpeaker] = useState(false);
   const [readSpeakerNames, setReadSpeakerNames] = useState(false);
   const [speakers, setSpeakers] = useState<SpeakerMappingItem[]>([]);
-  
+
   const [activeJob, setActiveJob] = useState<TTSJob | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -253,7 +253,7 @@ export const Studio: React.FC<StudioProps> = ({ voices, onOpenVoiceModal }) => {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '24px' }}>
-        
+
         {/* Cột Trái: Trình Soạn Thảo Văn Bản & Biểu Thức */}
         <div>
           <div className="glass-panel" style={{ padding: '24px' }}>
@@ -478,7 +478,7 @@ export const Studio: React.FC<StudioProps> = ({ voices, onOpenVoiceModal }) => {
                 <>Đang Tạo Giọng Nói...</>
               ) : (
                 <>
-                  <Wand2 size={18} /> Tạo Giọng Nói (Generate Speech)
+                  Tạo Giọng Nói
                 </>
               )}
             </button>
@@ -684,7 +684,7 @@ export const Studio: React.FC<StudioProps> = ({ voices, onOpenVoiceModal }) => {
                       textTransform: 'uppercase'
                     }}
                   >
-                    {fmt} {fmt === 'mp3' ? '(Nén MP3)' : '(Gốc WAV)'}
+                    {fmt}
                   </button>
                 ))}
               </div>

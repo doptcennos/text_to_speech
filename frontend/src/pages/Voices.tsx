@@ -21,10 +21,10 @@ export const Voices: React.FC<VoicesProps> = ({
   const [description, setDescription] = useState('');
   const [language, setLanguage] = useState('vi');
   const [sampleFiles, setSampleFiles] = useState<File[]>([]);
-  
+
   const [isConsentOpen, setIsConsentOpen] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -53,7 +53,7 @@ export const Voices: React.FC<VoicesProps> = ({
     if (description.trim()) formData.append('description', description.trim());
     formData.append('language', language);
     formData.append('consent', 'true');
-    
+
     // Append all selected files
     sampleFiles.forEach((f) => {
       formData.append('samples', f);
@@ -106,7 +106,7 @@ export const Voices: React.FC<VoicesProps> = ({
           </p>
         </div>
         <button onClick={() => setIsAddModalOpen(true)} className="btn-primary">
-          <Plus size={18} /> + Thêm Giọng Mới
+          Thêm Giọng Mới
         </button>
       </div>
 

@@ -74,6 +74,12 @@ export const api = {
     if (!res.ok) throw new Error('Failed to cancel job');
   },
 
+  async deleteJob(id: string): Promise<void> {
+    const res = await fetch(`${API_BASE}/tts/jobs/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Failed to delete history record');
+  },
+
+
   async deleteAudio(id: string): Promise<void> {
     const res = await fetch(`${API_BASE}/audio/${id}`, { method: 'DELETE' });
     if (!res.ok) throw new Error('Failed to delete audio');

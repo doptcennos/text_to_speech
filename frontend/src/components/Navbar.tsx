@@ -1,9 +1,9 @@
 import React from 'react';
-import { Mic, Radio, History, Settings, Volume2 } from 'lucide-react';
+import { Mic, Radio, Settings, Volume2 } from 'lucide-react';
 
 interface NavbarProps {
-  activeTab: 'studio' | 'voices' | 'history' | 'settings';
-  setActiveTab: (tab: 'studio' | 'voices' | 'history' | 'settings') => void;
+  activeTab: 'studio' | 'voices' | 'settings';
+  setActiveTab: (tab: 'studio' | 'voices' | 'settings') => void;
   isEngineReady: boolean;
 }
 
@@ -37,7 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isEngin
         </div>
         <div>
           <h1 style={{ fontSize: '18px', fontWeight: '800', letterSpacing: '-0.5px' }}>
-            PHÒNG THU GIỌNG NÓI <span style={{ color: 'var(--accent-secondary)', fontSize: '14px', fontWeight: '600' }}>AI</span>
+            PHÒNG THU GIỌNG NÓI
           </h1>
           <p style={{ fontSize: '12px', color: 'var(--text-dim)', letterSpacing: '0.2px' }}>
             Nhân Bản Giọng Nói & Text-to-Speech Offline
@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isEngin
         {[
           { id: 'studio', label: 'Phòng Thu', icon: Radio },
           { id: 'voices', label: 'Giọng Của Tôi', icon: Mic },
-          { id: 'history', label: 'Lịch Sử', icon: History },
+
           { id: 'settings', label: 'Cài Đặt', icon: Settings },
         ].map((tab) => {
           const Icon = tab.icon;
@@ -82,19 +82,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isEngin
         })}
       </nav>
 
-      {/* Trạng thái Động Cơ AI */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px' }}>
-        <span style={{
-          width: '9px',
-          height: '9px',
-          borderRadius: '50%',
-          backgroundColor: isEngineReady ? 'var(--success)' : 'var(--warning)',
-          boxShadow: isEngineReady ? '0 0 10px var(--success)' : 'none'
-        }} />
-        <span style={{ color: 'var(--text-muted)' }}>
-          {isEngineReady ? 'Mô hình AI sẵn sàng' : 'Đang khởi tạo...'}
-        </span>
-      </div>
     </header>
   );
 };

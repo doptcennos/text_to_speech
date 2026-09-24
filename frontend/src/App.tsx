@@ -4,11 +4,10 @@ import { api } from './services/api';
 import { Navbar } from './components/Navbar';
 import { Studio } from './pages/Studio';
 import { Voices } from './pages/Voices';
-import { History } from './pages/History';
 import { Settings } from './pages/Settings';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'studio' | 'voices' | 'history' | 'settings'>('studio');
+  const [activeTab, setActiveTab] = useState<'studio' | 'voices' | 'settings'>('studio');
   const [voices, setVoices] = useState<Voice[]>([]);
   const [isEngineReady, setIsEngineReady] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -38,10 +37,6 @@ export const App: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleRegenerateFromHistory = (text: string, voiceId?: string, emotion?: string) => {
-    setActiveTab('studio');
-  };
-
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar
@@ -65,26 +60,12 @@ export const App: React.FC = () => {
             setIsAddModalOpen={setIsAddModalOpen}
           />
         )}
-        {activeTab === 'history' && (
-          <History
-            onRegenerate={handleRegenerateFromHistory}
-          />
-        )}
         {activeTab === 'settings' && (
           <Settings />
         )}
       </main>
 
-      <footer style={{
-        padding: '20px 32px',
-        borderTop: '1px solid var(--border-color)',
-        textAlign: 'center',
-        fontSize: '12px',
-        color: 'var(--text-dim)',
-        backgroundColor: 'rgba(10, 13, 20, 0.95)'
-      }}>
-        Hệ Thống Text-to-Speech & Nhân Bản Giọng Nói Chạy Cục Bộ (Offline) • Docker trên Ubuntu 22.04
-      </footer>
+
     </div>
   );
 };

@@ -164,7 +164,7 @@ Mỗi câu văn bản được bộ tách cú pháp `parse_expressions` phân r�
 │       ├── pages/
 │       │   ├── Studio.tsx      # Trang phòng thu chính (nhập văn bản, biểu thức, đa thoại)
 │       │   ├── Voices.tsx      # Trang quản lý danh sách hồ sơ giọng đọc
-│       │   ├── History.tsx     # Trang lịch sử các bản thu đã tạo
+│       │   
 │       │   └── Settings.tsx    # Cài đặt hệ thống
 │       └── services/
 │           └── api.ts          # Module gọi REST API backend
