@@ -1,0 +1,6 @@
+name = "text-to-speech-frontend"
+compatibility_date = "2024-09-01"
+
+# Cấu hình Static Assets cho Cloudflare Workers (yêu cầu Wrangler v3.78+)
+# Cloudflare sẽ tự động phục vụ các file trong ./dist với đúng MIME type (js, css, html)
+assets = { directory = "./dist" }
