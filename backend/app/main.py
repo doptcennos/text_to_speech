@@ -2,7 +2,9 @@ import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
+import os
 
 from app.config import settings
 from app.database import init_db
@@ -68,11 +70,25 @@ def health():
     from app.services.model_service import ModelService
     return ModelService.get_health_status()
 
-@app.get("/")
-def root():
-    return {
-        "app": settings.APP_NAME,
-        "status": "online",
-        "docs": "/docs",
-        "health": "/api/health"
-    }
+frontend_dist = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist"))
+
+if os.path.exists(frontend_dist):
+    assets_dir = os.path.join(frontend_dist, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        target = os.path.join(frontend_dist, full_path)
+        if full_path and os.path.isfile(target):
+            return FileResponse(target)
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
+else:
+    @app.get("/")
+    def root():
+        return {
+            "app": settings.APP_NAME,
+            "status": "online",
+            "docs": "/docs",
+            "health": "/api/health"
+        }
